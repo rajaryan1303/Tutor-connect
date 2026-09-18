@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/students/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/teachers/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/bookings/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/payments/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/reviews/(.*)",
+      "dest": "/backend/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "backend/server.js": {
+      "maxDuration": 30
+    }
+  }
+}

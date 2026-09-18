@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 dark:bg-dark-bg dark:text-dark-text;
+  }
+}
+
+@layer components {
+  .container { @apply max-w-6xl mx-auto px-4; }
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-slate-200/80 dark:bg-dark-card dark:border-dark-border;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px -8px rgb(0 0 0 / 0.18);
+    border-color: rgb(99 102 241 / 0.35);
+  }
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 font-semibold text-white bg-primary-600 hover:bg-primary-700 disabled:opacity-60;
+    transition: transform 140ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  }
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px -4px rgb(79 70 229 / 0.55);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px) scale(0.97);
+  }
+  .btn-secondary {
+    @apply bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    box-shadow: 0 6px 14px -4px rgb(71 85 105 / 0.55);
+  }
+  .input {
+    @apply w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400 dark:bg-slate-800 dark:border-slate-600 dark:text-white;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .input:focus {
+    border-color: rgb(99 102 241 / 0.6);
+  }
+  .label {
+    @apply block text-sm font-medium text-slate-700 dark:text-slate-300;
+  }
+  .page-title {
+    @apply text-2xl font-bold text-slate-900 dark:text-dark-heading mb-6;
+    animation: fade-up 400ms ease both;
+  }
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop-in {
+  0%   { opacity: 0; transform: scale(0.92) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+.animate-fade-up   { animation: fade-up 450ms ease backwards; }
+.animate-fade-down { animation: fade-down 400ms ease backwards; }
+.animate-pop       { animation: pop-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-float     { animation: float-slow 5s ease-in-out infinite; }
+.animate-pulse-soft{ animation: pulse-soft 2.2s ease-in-out infinite; }
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(148 163 184 / 0.15) 25%,
+    rgb(148 163 184 / 0.35) 50%,
+    rgb(148 163 184 / 0.15) 75%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+/* Staggered entrance helper via inline style-delay, e.g. style={{ animationDelay: '60ms' }} */
+.stagger > * {
+  animation: fade-up 450ms ease backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
