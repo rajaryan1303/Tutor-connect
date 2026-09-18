@@ -59,8 +59,8 @@ A comprehensive, full-stack tutoring platform with modern UI, dark mode, and com
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/tutorconnect.git
-cd tutorconnect
+git clone https://github.com/rajaryan1303/Tutor-connect.git
+cd Tutor-connect
 ```
 
 2. **Install dependencies**
@@ -134,12 +134,42 @@ tutorconnect/
 │   ├── seed.js            # Demo data seed script
 │   └── server.js          # Server entry point
 ├── dist/                  # Production build
+├── render.yaml            # Render (free) one-click deploy blueprint
+├── Procfile               # node backend/server.js
 └── package.json         # Dependencies and scripts
 ```
 
 ## 🌐 Deployment Options
 
-### Option 1: Netlify (Recommended for Frontend)
+### Option 1: Render + MongoDB Atlas (Recommended — 100% Free)
+
+The repo ships with a `render.yaml` blueprint that pre-configures the free plan,
+build, start command, and health check — so deploying is one click.
+
+1. **Push this repo to your GitHub account.**
+2. **MongoDB Atlas (mongodb.com)** — create a free **M0** cluster:
+   - Database Access → add a user + password.
+   - Network Access → **Allow Access from Anywhere** (`0.0.0.0/0`).
+   - Database → Connect → Drivers → copy the connection string, insert your
+     password, and add the database name:
+     `mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/tutor_connect?retryWrites=true&w=majority`
+3. **Render (render.com)** — **New → Blueprint** → select this repo.
+   `render.yaml` auto-fills the free plan, `npm install` build (runs the Vite
+   build via `postinstall`), `node backend/server.js` start, and `/api/health`.
+4. Set the `MONGODB_URI` env var to your Atlas string (above). `JWT_SECRET`
+   auto-generates; `NODE_ENV` is already `production`.
+5. **Deploy**, then seed the live DB once from your machine:
+   ```bash
+   $env:MONGODB_URI="mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/tutor_connect?retryWrites=true&w=majority"
+   npm run seed
+   ```
+6. Open `https://<your-app>.onrender.com` — verify with
+   `https://<your-app>.onrender.com/api/health` → `{"success":true,...}`.
+
+> Free-tier notes: Render spins down after 15 min idle (first load ~1 min cold
+> start); Atlas M0 is 512 MB storage, free forever.
+
+### Option 2: Netlify (Frontend only)
 
 1. **Build the project**
 ```bash
@@ -150,7 +180,7 @@ npm run build
 - Drag and drop the `dist` folder to Netlify
 - Or connect your GitHub repository for automatic deployments
 
-### Option 2: Vercel
+### Option 3: Vercel
 
 1. **Install Vercel CLI**
 ```bash
@@ -162,7 +192,7 @@ npm i -g vercel
 vercel --prod
 ```
 
-### Option 3: Railway (Full-Stack)
+### Option 4: Railway (Full-Stack)
 
 1. **Connect GitHub repository**
 2. **Set environment variables**
@@ -214,7 +244,7 @@ signature (HMAC-SHA256) before marking the booking paid.
 
 ## 🧪 Running Tests
 
-The backend ships with an API test suite that covers all flows (65 checks), a
+The backend ships with an API test suite that covers all flows (67 checks), a
 white-box suite (27 tests with code coverage), and a production smoke test — all
 run against an ephemeral MongoDB, no install needed:
 
@@ -286,9 +316,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 If you have any questions or need help with deployment, please:
-- Open an issue on GitHub
+- Open an issue on [GitHub](https://github.com/rajaryan1303/Tutor-connect/issues)
 - Contact: rajaryan1303y@gmail.com
-- Documentation: [Wiki](https://github.com/yourusername/tutorconnect/wiki)
+- Documentation: [Wiki](https://github.com/rajaryan1303/Tutor-connect/wiki)
 
 ---
 
