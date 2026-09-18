@@ -3,7 +3,7 @@ services:
     name: tutor-connect
     runtime: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install --include=dev
     startCommand: node backend/server.js
     healthCheckPath: /api/health
     envVars:
